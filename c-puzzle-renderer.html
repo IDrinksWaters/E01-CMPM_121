@@ -18,10 +18,27 @@
   <script>
     const canvas = document.querySelector("#board");
     const ctx = canvas.getContext("2d");
+
+    // two arrangement of tiles becomes list of objects with position and color, so we can add / remove / modify tiles easily.
     const layouts = [
-      { label: "Row", positions: [[55, 80], [175, 80], [295, 80]], colors: ["#e6a23c", "#6555aa", "#248a87"] },
-      { label: "Stack", positions: [[135, 55], [175, 80], [215, 105]], colors: ["#248a87", "#e6a23c", "#6555aa"] },
+      {
+        label: "Row",
+        tiles: [
+          { position: [55, 80], color: "#e6a23c" },
+          { position: [175, 80], color: "#6555aa" },
+          { position: [295, 80], color: "#248a87" }
+        ]
+      },
+      {
+        label: "Stack",
+        tiles: [
+          { position: [135, 55], color: "#248a87" },
+          { position: [175, 80], color: "#e6a23c" },
+          { position: [215, 105], color: "#6555aa" }
+        ]
+      }
     ];
+
     let layoutIndex = 0;
     const options = { experimentalShadows: false };
 
@@ -35,9 +52,14 @@
       const layout = layouts[layoutIndex];
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       document.querySelector("#arrangement").textContent = `Arrangement: ${layout.label}`;
-      layout.positions.forEach(([x, y], index) => {
-        paintRectangle(layout.colors[index], x, y);
+
+
+      // we had to modify so that it fits the new layout object with tiles, with the new paintRectangle function that we combined.
+      layout.tiles.forEach((tile) => {
+        const [x, y] = tile.position;
+        paintRectangle(tile.color, x, y);
       });
+      
       // If options.experimentalShadows, try drawing a fancy second pass later.
       // ctx.shadowBlur = 12;
       // ctx.shadowColor = "#ffffff";
