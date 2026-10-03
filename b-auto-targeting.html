@@ -38,18 +38,20 @@
 
     function chooseTarget(enemies) {
       let target = null;
-      // Pick the living enemy with the greatest maximum health.
+      // Pick the living enemy that are living and has the most current health
       for (const enemy of enemies) {
         // If health is zero, that enemy is not alive.
-        if (enemy.health <= 0)
-        {
+
+        if (enemy.health <= 0) {
           continue;
         }
-        // Keep the earliest enemy if two have equal health.
-          if (target && target.health > enemy.health) {
-          continue;
-          }
-          target = enemy;
+
+        // If current target has more health than the next target, then we keep the current target.  
+        if (target && target.health > enemy.health) {
+        continue;
+        }
+
+        target = enemy;
       }
       return target;
     }
