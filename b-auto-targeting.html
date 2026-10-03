@@ -40,18 +40,17 @@
       let target = null;
       // Pick the living enemy that are living and has the most current health
       for (const enemy of enemies) {
-        // If health is zero, that enemy is not alive.
 
+        // If health is zero, that enemy is not alive.
         if (enemy.health <= 0) {
           continue;
         }
 
-        // If current target has more health than the next target, then we keep the current target.  
-        if (target && target.health > enemy.health) {
-        continue;
+        // if there's no target OR the current enemy has >= health than the current target, then select that enemy as new target
+        if (!target || enemy.health >= target.health){
+          target = enemy;
         }
 
-        target = enemy;
       }
       return target;
     }
