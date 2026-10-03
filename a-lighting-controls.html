@@ -18,35 +18,39 @@
   <button id="previous" type="button">Previous</button>
   <button id="next" type="button">Next</button>
   <script>
-    const X = [
+
+    // we store all the colors inside X, an array of colors
+
+    const preset_color = [
       { name: "Amber", color: "#e6a23c" },
       { name: "Indigo", color: "#6555aa" },
       { name: "Teal", color: "#248a87" },
     ];
-    let x = 0;
-    let updates_enabled = true;
+    let current_colors = 0;
+    let color_lists = preset_color;
     const label = document.querySelector("#label");
     const swatch = document.querySelector("#swatch");
 
+    // function to update the colors
     function update() {
-      if (updates_enabled) {
-        let item = X[0];
-        for (let i = 0; i < X.length; i++) {
-          if (i === x) item = X[i];
-        }
-        label.textContent = item.name;
-        swatch.style.backgroundColor = item.color;
-      } else {
-        console.log("ignored update while updates are disabled");
-      }
+
+
+
+      //let item = first item in the array.
+      let color = color_lists[current_colors];
+
+      label.textContent = color.name;
+      swatch.style.backgroundColor = color.color;
+
+
     }
 
     document.querySelector("#next").addEventListener("click", () => {
-      x = (x + 1) % X.length;
+      current_colors = (current_colors + 1) % preset_color.length;
       update();
     });
     document.querySelector("#previous").addEventListener("click", () => {
-      x = (x - 1 + X.length) % X.length;
+      current_colors = (current_colors - 1 + preset_color.length) % preset_color.length;
       update();
     });
     update();
